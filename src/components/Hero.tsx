@@ -20,14 +20,14 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 text-center flex-1 flex flex-col justify-center">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 animate-fade-in">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 flex-1 flex flex-col justify-center items-center">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 animate-fade-in text-center">
           Sandile Mathenjwa
         </h1>
-        <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto">
+        <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 max-w-2xl text-center">
           Full Stack Developer • Digital Facilitator • Content Creator
         </p>
-        <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-xl mx-auto mb-8 sm:mb-12">
+        <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-xl mb-8 sm:mb-12 text-center">
           Building digital solutions and creating content from KwaZulu-Natal, South Africa
         </p>
         
