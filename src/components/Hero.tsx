@@ -1,8 +1,13 @@
 import backgroundImage from "@/assets/background.png";
+import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
+  const scrollToNext = () => {
+    document.getElementById('agent')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Background Image/Video */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -15,7 +20,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 text-center flex-1 flex flex-col justify-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 animate-fade-in">
           Sandile Mathenjwa
         </h1>
@@ -33,6 +38,15 @@ const Hero = () => {
           Talk to My AI Agent
         </a>
       </div>
+
+      {/* Scroll Indicator */}
+      <button
+        onClick={scrollToNext}
+        className="relative z-10 mb-8 text-white/80 hover:text-white transition-colors animate-bounce cursor-pointer group"
+        aria-label="Scroll to next section"
+      >
+        <ChevronDown className="w-8 h-8 sm:w-10 sm:h-10" />
+      </button>
     </section>
   );
 };

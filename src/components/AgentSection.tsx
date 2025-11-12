@@ -1,6 +1,14 @@
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AgentSection = () => {
+  const handleStartConversation = () => {
+    // Trigger ElevenLabs widget - it will appear at the top of the screen
+    // The actual implementation depends on your ElevenLabs setup
+    console.log("Starting conversation with AI agent");
+    // Example: window.elevenLabsWidget?.show();
+  };
+
   return (
     <section id="agent" className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-background to-secondary/30">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,23 +21,20 @@ const AgentSection = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
             Ask Me Anything
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Curious about my professional journey, technical skills, or the projects I've built? 
-            You can speak directly with my AI agent to learn more. Simply click the call icon below, 
-            accept the terms, and start a conversation.
+            Click the button below to speak with my AI agent. The conversation widget will appear at the top of your screen.
           </p>
-        </div>
 
-        {/* AI Agent Widget Container */}
-        <div className="backdrop-blur-sm bg-card/80 rounded-2xl shadow-strong p-4 sm:p-6 md:p-8 border border-border">
-          <div id="agent-widget" className="min-h-[300px] sm:min-h-[400px] flex items-center justify-center">
-            {/* ElevenLabs widget will be injected here via script */}
-            <div className="text-center text-muted-foreground">
-              <MessageSquare className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 text-primary/50" />
-              <p className="text-sm sm:text-base">Agent widget will load here</p>
-              <p className="text-xs sm:text-sm mt-2">Click the microphone icon to start talking</p>
-            </div>
-          </div>
+          {/* CTA Button */}
+          <Button 
+            onClick={handleStartConversation}
+            size="lg"
+            className="gap-2 px-8 py-6 text-base sm:text-lg font-semibold rounded-full shadow-strong hover:scale-105 transition-transform"
+          >
+            <Phone className="w-5 h-5" />
+            Talk to My AI Agent
+          </Button>
         </div>
 
         <div className="mt-6 sm:mt-8 text-center">
