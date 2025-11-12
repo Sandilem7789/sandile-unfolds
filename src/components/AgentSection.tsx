@@ -1,12 +1,30 @@
-import { MessageSquare, Phone } from "lucide-react";
+import { MessageSquare, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { set } from "date-fns";
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "elevenlabs-convai": {
+        "agent-id": string;
+        position?: string;
+      };
+    }
+  }
+}
 
 const AgentSection = () => {
+  const [showAgent, setShowAgent] = useState(false);
+
   const handleStartConversation = () => {
-    // Trigger ElevenLabs widget - it will appear at the top of the screen
-    // The actual implementation depends on your ElevenLabs setup
+    setShowAgent(true);
     console.log("Starting conversation with AI agent");
-    // Example: window.elevenLabsWidget?.show();
+  };
+
+  const handleCloseAgent = () => {
+    setShowAgent(false);
+    console.log("Closing conversation with AI agent");
   };
 
   return (
@@ -36,6 +54,27 @@ const AgentSection = () => {
             Talk to My AI Agent
           </Button>
         </div>
+
+        {/* Render the widget only when toggled on */}
+        {showAgent && (
+          <div className="fixed top-0 left-0 w-full z-50 pointer-events-none">
+            {/* ElevenLabs widget element; pointer-events on container off, but allow interactions on widget */}
+            <div className="pointer-events-auto flex justify-center">
+              <elevenlabs-convai
+              agent-id={import.meta.env.VITE_ELEVENLABS_AGENT_ID}
+              position="top"
+              />
+              <button
+              onClick={handleCloseAgent}
+              className="ml-2 mt-2 bg-black/70 text-white text-xs px-3 py-1 rounded-full hover:bg-black"
+              >
+              <span className="inline-flex items-center gap-1">
+                <X className="w-3 h-3" /> Close
+              </span>
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="mt-6 sm:mt-8 text-center">
           <p className="text-xs sm:text-sm text-muted-foreground">
