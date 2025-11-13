@@ -59,6 +59,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // South African terrain inspired colors
+        "sa-gold": "hsl(45, 70%, 60%)",
+        "sa-blue": "hsl(210, 60%, 35%)",
+        "sa-green": "hsl(140, 40%, 45%)",
+        "sa-mist": "hsl(200, 20%, 85%)",
       },
       borderRadius: {
         lg: "var(--radius)",

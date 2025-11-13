@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
   const scrollToNext = () => {
-    document.getElementById('agent')?.scrollIntoView({ behavior: 'smooth' });
+    window.location.href = '/projects';
   };
 
   return (
@@ -32,8 +32,8 @@ const Hero = () => {
         </p>
         
         <a 
-          href="#agent" 
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-accent hover:bg-accent/90 text-white font-semibold rounded-full transition-all hover:scale-105 shadow-strong"
+          href="/agent" 
+          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-accent hover:bg-accent/90 text-white font-semibold rounded-full transition-all hover:scale-105 shadow-strong animate-pulse-soft"
         >
           Talk to My AI Agent
         </a>

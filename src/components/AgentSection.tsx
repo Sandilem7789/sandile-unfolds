@@ -1,4 +1,4 @@
-import { MessageSquare, Phone, X } from "lucide-react";
+import { MessageSquare, Phone, X, Waves } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { set } from "date-fns";
@@ -48,7 +48,7 @@ const AgentSection = () => {
           <Button 
             onClick={handleStartConversation}
             size="lg"
-            className="gap-2 px-8 py-6 text-base sm:text-lg font-semibold rounded-full shadow-strong hover:scale-105 transition-transform"
+            className="gap-2 px-8 py-6 text-base sm:text-lg font-semibold rounded-full shadow-strong hover:scale-105 transition-transform animate-pulse-soft"
           >
             <Phone className="w-5 h-5" />
             Talk to My AI Agent
@@ -77,6 +77,9 @@ const AgentSection = () => {
         )}
 
         <div className="mt-6 sm:mt-8 text-center">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Waves className="w-5 h-5 text-primary animate-pulse" />
+          </div>
           <p className="text-xs sm:text-sm text-muted-foreground">
             The AI agent is designed to answer questions about my background, expertise in full stack development, 
             and the platforms I've created.

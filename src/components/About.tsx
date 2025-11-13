@@ -39,14 +39,14 @@ const About = () => {
           </div>
         </div>
 
-        {/* Skills Grid */}
+        {/* Skills Grid with Stagger Animation */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {skills.map((skill) => {
+          {skills.map((skill, index) => {
             const Icon = skill.icon;
             return (
               <div 
                 key={skill.title}
-                className="bg-card rounded-xl p-6 sm:p-8 shadow-soft hover:shadow-strong transition-all duration-300 border border-border hover:border-primary/30 text-center group"
+                className={`bg-card rounded-xl p-6 sm:p-8 shadow-soft hover:shadow-strong transition-all duration-300 border border-border hover:border-primary/30 text-center group animate-fade-in-up stagger-${index + 1}`}
               >
                 <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full mb-4 group-hover:bg-primary/20 transition-colors">
                   <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
