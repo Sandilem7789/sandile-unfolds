@@ -13,7 +13,14 @@ const Header = () => {
           </a>
           
           <div className="flex items-center gap-3 sm:gap-4">
-            <span className="text-sm sm:text-base font-semibold text-white/90">sandile</span>
+            <span className="text-sm sm:text-base font-semibold text-white/90">
+              <a 
+                href="#about" 
+                className="hover:text-accent transition-colors"
+              >
+                sandile
+              </a>
+            </span>
             <div className="flex gap-2">
               <a
                 href="https://www.linkedin.com/in/sandile-mathenjwa"
