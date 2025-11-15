@@ -85,7 +85,7 @@ const AgentSection = () => {
             <img 
               src="/src/assets/ai-agent-icon.png" 
               alt="AI Agent" 
-              className="w-16 h-16 opacity-70"
+              className="w-64 h-64 opacity-70"
             />
           </div>
         </div>
