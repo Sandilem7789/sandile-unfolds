@@ -1,20 +1,43 @@
+import { useState } from "react";
 import backgroundImage from "@/assets/background.png";
 import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   const scrollToNext = () => {
-    window.location.href = '/projects';
+    window.location.href = "/projects";
   };
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Image/Video */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={backgroundImage} 
-          alt="Mountain landscape background" 
-          className="w-full h-full object-cover"
+        <img
+          src={backgroundImage}
+          alt="Mountain landscape background"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full h-full object-cover transition-opacity duration-1000 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
         />
+
+        {/* Background Video (fades in over image) */}
+        <video
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={backgroundImage} // fallback poster until video loads
+          onCanPlayThrough={() => setVideoLoaded(true)}
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+
         {/* Gradient overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-overlay/70 via-overlay/50 to-overlay/70"></div>
       </div>
@@ -30,9 +53,9 @@ const Hero = () => {
         <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-xl mb-8 sm:mb-12 text-center">
           Building digital solutions and creating content from KwaZulu-Natal, South Africa
         </p>
-        
-        <a 
-          href="/agent" 
+
+        <a
+          href="/agent"
           className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-accent hover:bg-accent/90 text-white font-semibold rounded-full transition-all hover:scale-105 shadow-strong animate-pulse-soft"
         >
           Talk to My AI Agent
