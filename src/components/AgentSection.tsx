@@ -43,7 +43,7 @@ const AgentSection = () => {
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Curious about my professional journey, technical skills, or the
-            projects I've built? Click the button below to speak with my AI
+            projects I've built? Click the button below to speak or text with my AI
             agent. The conversation widget will appear at the top of your screen.
           </p>
 
