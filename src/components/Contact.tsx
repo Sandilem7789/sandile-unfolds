@@ -34,7 +34,7 @@ const Contact = () => {
             className="w-full sm:w-auto border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-soft hover:shadow-strong transition-all hover:scale-105"
           >
             <a 
-              href="https://wa.me/27123456789" 
+              href="https://wa.me/27638364185" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2"

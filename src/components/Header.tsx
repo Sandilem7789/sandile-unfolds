@@ -1,6 +1,18 @@
-import { Linkedin, Youtube, Menu, X } from "lucide-react";
+import { Linkedin, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+// Custom TikTok Icon (inline SVG)
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 276 276"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M168 0h32c0 44 36 80 80 80v32c-31 0-61-10-84-28v92c0 44-36 80-80 80s-80-36-80-80 36-80 80-80h16v32h-16c-26 0-48 22-48 48s22 48 48 48 48-22 48-48V0z"/>
+  </svg>
+);
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,7 +67,7 @@ const Header = () => {
             <span className="text-sm sm:text-base font-semibold text-foreground">sandile</span>
             <div className="flex gap-2">
               <a
-                href="https://www.linkedin.com/in/sandile-mathenjwa"
+                href="https://www.linkedin.com/in/sandile-mathenjwa-869140144/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/70 hover:text-accent transition-colors"
@@ -64,13 +76,13 @@ const Header = () => {
                 <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
               <a
-                href="https://youtube.com/@sandilemathenjwa"
+                href="https://www.tiktok.com/@mesh_audio_popeyesout"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/70 hover:text-accent transition-colors"
-                aria-label="YouTube Channel"
+                aria-label="TikTok Profile"
               >
-                <Youtube className="w-4 h-4 sm:w-5 sm:h-5" />
+                <TikTokIcon className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
             </div>
           </div>

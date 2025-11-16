@@ -83,7 +83,7 @@ const AgentSection = () => {
           </p>
           <div className="flex items-center justify-center">
             <img 
-              src="/src/assets/ai-agent-icon.png" 
+              src="/ai-agent-icon.png" 
               alt="AI Agent" 
               className="w-64 h-64 opacity-70"
             />
