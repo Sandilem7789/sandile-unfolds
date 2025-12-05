@@ -1,73 +1,65 @@
-# Welcome to your Lovable project
+# sandile-unfolds
 
-## Project info
+Sandile Mathenjwa — portfolio website with embedded AI agent and automation integrations. This project showcases web work, collects visitor analytics via n8n workflows, and includes an AI-powered recruiter chatbot with future plans to expand into a SaaS for graduate networking.
 
-**URL**: https://lovable.dev/projects/a2fc4735-1acb-4f9b-b4ae-59b060d10097
+**Why this project**: a clean, professional portfolio with practical automation and an interactive agent to help recruiters and visitors quickly find relevant information.
 
-## How can I edit this code?
+**Features**
+- **Clean portfolio showcase**: Modular React components showcase projects, skills, and background.
+- **Visitor analytics via n8n**: Visitor events are routed to `n8n` for processing and lightweight automation (notifications, dashboards).
+- **Recruiter engagement chatbot**: An embedded conversational agent helps recruiters ask about experience, projects, and schedule follow-ups.
+- **Future SaaS expansion**: Planned features to turn the platform into a graduate networking SaaS (matchmaking, job feeds, analytics dashboards).
 
-There are several ways of editing your application.
+**Installation**
+- Clone the repository:
 
-**Use Lovable**
+```bash
+git clone https://github.com/Sandilem7789/sandile-unfolds.git
+cd sandile-unfolds
+```
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a2fc4735-1acb-4f9b-b4ae-59b060d10097) and start prompting.
+- Install dependencies (npm):
 
-Changes made via Lovable will be committed automatically to this repo.
+```powershell
+npm install
+```
 
-**Use your preferred IDE**
+- Run the development server (Vite):
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```powershell
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Notes:
+- This project uses Vite + React + TypeScript. If you use `bun` or `pnpm`, you can substitute the appropriate commands (e.g., `bun install` / `bun dev`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**Usage**
+- Open the site locally at the address printed by `npm run dev` (usually `http://localhost:5173`).
+- Viewing the portfolio: navigate the `home`, `projects`, `about`, and `contact` pages to review work and case-studies.
+- Interacting with the AI agent: click the agent UI (embedded widget) to ask about projects, request a resume, or schedule a conversation. The agent can trigger `n8n` automations for recruiter follow-ups.
 
-**Use GitHub Codespaces**
+**Tech Stack**
+- **Frontend**: React, TypeScript, Vite
+- **Styling**: Tailwind CSS and component-based UI primitives
+- **Hosting**: Netlify (static site) or other static hosts
+- **Automation / Analytics**: n8n workflows for event processing and notifications
+- **Backend / Services**: VPS-hosted APIs for server-side logic and secure webhook endpoints
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**Roadmap**
+- **Phase 1 — Portfolio improvements**: polish UI, add performance and accessibility improvements, refine AI agent responses and collector flows.
+- **Phase 2 — SaaS graduate network**: build user accounts, matchmaking engine, recruiter dashboards, monetization options, and multi-tenant support.
 
-## What technologies are used for this project?
+**License**
+- This project is released under the **MIT License**. See the `LICENSE` file for details.
 
-This project is built with:
+**Author**
+- **Name**: Sandile Mathenjwa
+- GitHub: `https://github.com/Sandilem7789`
+- LinkedIn: `https://www.linkedin.com/in/sandile-mathenjwa-869140144/`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+----
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a2fc4735-1acb-4f9b-b4ae-59b060d10097) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+If you'd like, I can also:
+- Add a `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` for open collaboration.
+- Add a short `Makefile` or script for common tasks.
+- Add badges (Netlify build, license, npm version) to the header.

@@ -1,21 +1,19 @@
-import { MessageSquare, Phone, X } from "lucide-react";
+import { MessageSquare, Phone, X, Mic, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "elevenlabs-convai": {
-        "agent-id": string;
-        position?: string;
-      };
-    }
-  }
+interface ChatMessage {
+  sender: "user" | "agent";
+  text: string;
 }
 
 const AgentSection = () => {
   const [showAgent, setShowAgent] = useState(false);
   const [iconLoaded, setIconLoaded] = useState(false);
+  const [userQuery, setUserQuery] = useState("");
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
   const handleStartConversation = () => {
     setShowAgent(true);
@@ -25,6 +23,54 @@ const AgentSection = () => {
   const handleCloseAgent = () => {
     setShowAgent(false);
     console.log("Closing conversation with AI agent");
+  };
+
+  const startListening = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported in this browser.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setUserQuery(transcript);
+    };
+    recognition.start();
+  };
+
+  const handleSend = async () => {
+    if (userQuery.trim() === "") return;
+
+    setMessages((prev) => [...prev, { sender: "user", text: userQuery }]);
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chatInput: userQuery,
+          sessionId: "agent-section-session",
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Agent raw response:", data);
+
+      setMessages((prev) => [
+        ...prev,
+        { sender: "agent", text: data?.text ?? JSON.stringify(data) },
+      ]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "agent", text: "Error contacting agent." },
+      ]);
+    }
+
+    setUserQuery("");
   };
 
   return (
@@ -44,34 +90,72 @@ const AgentSection = () => {
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Curious about my professional journey, technical skills, or the
             projects I've built? Click the button below to speak or text with my AI
-            agent. The conversation widget will appear at the top of your screen.
+            agent. The conversation widget will appear here.
           </p>
 
           {/* CTA Button */}
-          <Button
-            onClick={handleStartConversation}
-            size="lg"
-            className="gap-2 px-8 py-6 text-base sm:text-lg font-semibold rounded-full shadow-strong hover:scale-105 transition-transform animate-pulse-soft"
-          >
-            <Phone className="w-5 h-5" /> Talk to My AI Agent
-          </Button>
+          {!showAgent && (
+            <Button
+              onClick={handleStartConversation}
+              size="lg"
+              className="gap-2 px-8 py-6 text-base sm:text-lg font-semibold rounded-full shadow-strong hover:scale-105 transition-transform animate-pulse-soft"
+            >
+              <Phone className="w-5 h-5" /> Talk to My AI Agent
+            </Button>
+          )}
         </div>
 
-        {/* Render the widget only when toggled on */}
+        {/* Render the chat UI when toggled on */}
         {showAgent && (
-          <div className="fixed top-0 left-0 w-full z-50 pointer-events-none">
-            <div className="pointer-events-auto flex justify-center">
-              <elevenlabs-convai
-                agent-id={import.meta.env.VITE_ELEVENLABS_AGENT_ID}
-                position="top"
+          <div className="relative bg-white/5 backdrop-blur-md rounded-xl p-4 max-w-md mx-auto">
+            {/* Close button */}
+            <button
+              onClick={handleCloseAgent}
+              className="absolute top-2 right-2 bg-black/70 text-white text-xs px-3 py-1 rounded-full hover:bg-black"
+            >
+              <span className="inline-flex items-center gap-1">
+                <X className="w-3 h-3" /> Close
+              </span>
+            </button>
+
+            {/* Chat bubbles */}
+            <div className="flex flex-col gap-2 max-h-64 overflow-y-auto mb-3 pr-2">
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`px-3 py-2 rounded-xl text-sm text-white max-w-[80%] ${
+                    msg.sender === "user"
+                      ? "self-end bg-white/20"
+                      : "self-start bg-white/10"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              ))}
+            </div>
+
+            {/* Chat input */}
+            <div className="flex items-center bg-white/10 rounded-full h-12 px-4">
+              <input
+                type="text"
+                value={userQuery}
+                onChange={(e) => setUserQuery(e.target.value)}
+                placeholder="Type your question..."
+                className="bg-transparent text-white flex-grow outline-none placeholder-white/70 h-full"
               />
               <button
-                onClick={handleCloseAgent}
-                className="ml-2 mt-2 bg-black/70 text-white text-xs px-3 py-1 rounded-full hover:bg-black"
+                onClick={startListening}
+                className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
+                aria-label="Voice input"
               >
-                <span className="inline-flex items-center gap-1">
-                  <X className="w-3 h-3" /> Close
-                </span>
+                <Mic className="w-5 h-5" />
+              </button>
+              <button
+                onClick={handleSend}
+                className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
+                aria-label="Send message"
+              >
+                <Send className="w-5 h-5" />
               </button>
             </div>
           </div>
