@@ -2,14 +2,7 @@ import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
   const projects = [
-    {
-      title: "Furniverse",
-      description:
-        "An e-commerce platform for furniture sales, featuring product browsing, shopping cart functionality, and secure checkout. Built with modern web technologies for a seamless shopping experience.",
-      githubUrl: "https://github.com/Sandilem7789/furniverse-soul-cyber",
-      liveUrl: "https://furniverse-soul-cyber.onrender.com",
-      image: "/images/furniverse-preview.png", // replace with actual image path
-    },
+    
      {
       title: "GardenLink",
       description:
@@ -25,6 +18,14 @@ const Projects = () => {
       githubUrl: "https://github.com/Sandilem7789/sandile-unfolds",
       liveUrl: "https://mathenjwasandile.netlify.app", // replace with your live portfolio URL
       image: "/images/sandile-unfolds-preview.png", // replace with actual screenshot of your portfolio
+    },
+    {
+      title: "Furniverse",
+      description:
+        "An e-commerce platform for furniture sales, featuring product browsing, shopping cart functionality, and secure checkout. Built with modern web technologies for a seamless shopping experience.",
+      githubUrl: "https://github.com/Sandilem7789/furniverse-soul-cyber",
+      liveUrl: "https://furniverse-soul-cyber.onrender.com",
+      image: "/images/furniverse-preview.png", // replace with actual image path
     },
   ];
 
