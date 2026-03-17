@@ -119,7 +119,7 @@ const AgentSection = () => {
             </button>
 
             {/* Chat bubbles */}
-            <div className="flex flex-col gap-2 max-h-64 overflow-y-auto mb-3 pr-2">
+            <div className="flex flex-col gap-2 max-h-72 md:max-h-80 overflow-y-auto mb-3 pr-2 scrollbar-modern">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
