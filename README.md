@@ -26,6 +26,9 @@ To create a clean, professional portfolio that blends technical depth with autom
 - **Visitor Analytics via n8n**  
   Events are routed to n8n workflows for dashboards, notifications, and engagement tracking.
 
+- **Call Icon Voice Handoff**  
+  After four on-page questions, the chat agent nudges visitors to tap a call icon that opens the ElevenLabs voice agent for deeper conversations.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -47,3 +50,13 @@ git clone https://github.com/Sandilem7789/sandile-unfolds.git
 cd sandile-unfolds
 npm install
 npm run dev
+
+---
+
+## 🎧 RAG → Voice Call Flow
+
+- **Call icon flow**: The inline chat counts each submitted prompt. Once the visitor sends four or more prompts, the agent replies with “If you need more information press the call icon,” reveals a phone glyph beside the mic button, and keeps the conversation context intact so the handoff feels like a natural continuation.
+- **Query threshold**: The threshold is controlled via the `CALL_PROMPT_THRESHOLD` constant in `src/components/AgentSection.tsx` (default is 4, but you can set it to 5 or any other value). The counter resets if the visitor closes the chat widget.
+- **ElevenLabs embed**: Clicking the call icon renders `<elevenlabs-convai agent-id=...>` plus the official `@elevenlabs/convai-widget-embed` script. The script only loads when the widget is needed and reuses the `VITE_ELEVENLABS_AGENT_ID` environment variable, so rotating agent IDs is as simple as updating `.env`.
+- **Styling & configuration notes**: The call icon lives inside the existing input pill for visual continuity, with a helper caption beneath the field. The voice widget mounts inside the chat card, inherits the glassmorphism container styles, and can be restyled by targeting the wrapper div (`bg-black/40 border-white/10`).
+

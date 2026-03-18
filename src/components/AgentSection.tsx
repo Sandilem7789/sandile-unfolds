@@ -1,19 +1,41 @@
 import { MessageSquare, Phone, X, Mic, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ChatMessage {
   sender: "user" | "agent";
   text: string;
 }
 
+const CALL_PROMPT_THRESHOLD = 4;
+const CALL_PROMPT_MESSAGE = "If you need more information press the call icon.";
+
 const AgentSection = () => {
   const [showAgent, setShowAgent] = useState(false);
   const [iconLoaded, setIconLoaded] = useState(false);
   const [userQuery, setUserQuery] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [queryCount, setQueryCount] = useState(0);
+  const [callReady, setCallReady] = useState(false);
+  const [showCallWidget, setShowCallWidget] = useState(false);
 
   const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
+  const elevenLabsAgentId =
+    import.meta.env.VITE_ELEVENLABS_AGENT_ID || "agent_9101k924sh7hem6ayjrytn9yq3dk";
+
+  useEffect(() => {
+    if (!showCallWidget) return;
+
+    const scriptId = "elevenlabs-convai-script";
+    if (document.getElementById(scriptId)) return;
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+    script.async = true;
+    script.type = "text/javascript";
+    document.body.appendChild(script);
+  }, [showCallWidget]);
 
   const handleStartConversation = () => {
     setShowAgent(true);
@@ -22,6 +44,11 @@ const AgentSection = () => {
 
   const handleCloseAgent = () => {
     setShowAgent(false);
+    setMessages([]);
+    setUserQuery("");
+    setQueryCount(0);
+    setCallReady(false);
+    setShowCallWidget(false);
     console.log("Closing conversation with AI agent");
   };
 
@@ -40,8 +67,22 @@ const AgentSection = () => {
     recognition.start();
   };
 
+  const appendAgentResponse = (agentText: string, shouldPromptCall: boolean) => {
+    setMessages((prev) => {
+      const updated = [...prev, { sender: "agent", text: agentText }];
+      if (shouldPromptCall) {
+        updated.push({ sender: "agent", text: CALL_PROMPT_MESSAGE });
+      }
+      return updated;
+    });
+  };
+
   const handleSend = async () => {
     if (userQuery.trim() === "") return;
+
+    const nextCount = queryCount + 1;
+    const shouldPromptCall = !callReady && nextCount >= CALL_PROMPT_THRESHOLD;
+    setQueryCount(nextCount);
 
     setMessages((prev) => [...prev, { sender: "user", text: userQuery }]);
 
@@ -58,19 +99,21 @@ const AgentSection = () => {
       const data = await response.json();
       console.log("Agent raw response:", data);
 
-      setMessages((prev) => [
-        ...prev,
-        { sender: "agent", text: data?.text ?? JSON.stringify(data) },
-      ]);
+      appendAgentResponse(data?.text ?? JSON.stringify(data), shouldPromptCall);
     } catch (error) {
       console.error("Error sending message:", error);
-      setMessages((prev) => [
-        ...prev,
-        { sender: "agent", text: "Error contacting agent." },
-      ]);
+      appendAgentResponse("Error contacting agent.", shouldPromptCall);
+    }
+
+    if (shouldPromptCall) {
+      setCallReady(true);
     }
 
     setUserQuery("");
+  };
+
+  const handleCallIconClick = () => {
+    setShowCallWidget(true);
   };
 
   return (
@@ -135,29 +178,53 @@ const AgentSection = () => {
             </div>
 
             {/* Chat input */}
-            <div className="flex items-center bg-white/10 rounded-full h-12 px-4">
-              <input
-                type="text"
-                value={userQuery}
-                onChange={(e) => setUserQuery(e.target.value)}
-                placeholder="Type your question..."
-                className="bg-transparent text-white flex-grow outline-none placeholder-white/70 h-full"
-              />
-              <button
-                onClick={startListening}
-                className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
-                aria-label="Voice input"
-              >
-                <Mic className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleSend}
-                className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
-                aria-label="Send message"
-              >
-                <Send className="w-5 h-5" />
-              </button>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center bg-white/10 rounded-full h-12 px-4">
+                <input
+                  type="text"
+                  value={userQuery}
+                  onChange={(e) => setUserQuery(e.target.value)}
+                  placeholder="Type your question..."
+                  className="bg-transparent text-white flex-grow outline-none placeholder-white/70 h-full"
+                />
+                {callReady && (
+                  <button
+                    onClick={handleCallIconClick}
+                    className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
+                    aria-label="Start a call with the ElevenLabs agent"
+                    title="Continue via voice"
+                  >
+                    <Phone className="w-5 h-5" />
+                  </button>
+                )}
+                <button
+                  onClick={startListening}
+                  className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
+                  aria-label="Voice input"
+                >
+                  <Mic className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleSend}
+                  className="ml-2 text-white hover:text-accent transition-colors h-full flex items-center"
+                  aria-label="Send message"
+                >
+                  <Send className="w-5 h-5" />
+                </button>
+              </div>
+
+              {callReady && (
+                <p className="text-xs text-white/80 text-center">
+                  Prefer a deeper dive? Tap the call icon to continue via voice.
+                </p>
+              )}
             </div>
+
+            {showCallWidget && (
+              <div className="mt-4 rounded-xl border border-white/10 bg-black/40 p-3">
+                <elevenlabs-convai agent-id={elevenLabsAgentId}></elevenlabs-convai>
+              </div>
+            )}
           </div>
         )}
 
