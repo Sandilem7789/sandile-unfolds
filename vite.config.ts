@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@radix-ui/primitive": path.resolve(__dirname, "./src/lib/radix-primitive-shim"),
     },
   },
 }));
